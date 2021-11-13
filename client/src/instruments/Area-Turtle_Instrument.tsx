@@ -99,28 +99,37 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     </div>
   );
 }
-// for trumpet move all music notes to Bb (b-flat) 
-// add 1 for every value given??
+// for trumpet move all music notes by Bb (b-flat) 
+// -2 for every value given??
 /**
- * 
- * 
- * 
+ * C = Bb
+ * Db = B
+ * D = C
+ * Eb = C#(Db)
+ * E = D
+ * F = Eb
+ * Gb = E
+ * G = F
+ * Ab = F#(Gb)
+ * A = G
+ * Bb = Ab
+ * B = A
  */
 
  function Trumpet({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
-    { note: 'C', idx: 1 },
-    { note: 'Db', idx: 1.5 },
-    { note: 'D', idx: 2 },
-    { note: 'Eb', idx: 1.5 },
-    { note: 'E', idx: 3 },
-    { note: 'F', idx: 4 },
-    { note: 'Gb', idx: 4.5 },
-    { note: 'G', idx: 5 },
-    { note: 'Ab', idx: 5.5 },
-    { note: 'A', idx: 6 },
-    { note: 'Bb', idx: 6.5 },
-    { note: 'B', idx: 7 },
+    { note: 'C', idx: 5.5 },
+    { note: 'Db', idx: 6 },
+    { note: 'D', idx: 0 },
+    { note: 'Eb', idx: 0.5 },
+    { note: 'E', idx: 1 },
+    { note: 'F', idx: 1.5 },
+    { note: 'Gb', idx: 2 },
+    { note: 'G', idx: 3 },
+    { note: 'Ab', idx: 3.5 },
+    { note: 'A', idx: 4 },
+    { note: 'Bb', idx: 4.5 },
+    { note: 'B', idx: 5 },
   ]);
 
   const setOscillator = (newType: Tone.ToneOscillatorType) => {
