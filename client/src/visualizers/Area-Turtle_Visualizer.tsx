@@ -11,7 +11,7 @@ export const Area_Turtle_Visualizer = new Visualizer(
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
-    const dim = Math.max(width, height);
+    const dim = Math.min(width, height);
 
     p5.background(0, 0, 0, 255);
 
