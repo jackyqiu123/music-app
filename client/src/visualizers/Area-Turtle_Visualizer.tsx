@@ -11,7 +11,7 @@ export const Area_Turtle_Visualizer = new Visualizer(
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
-    const dim = Math.min(width, height);
+    const dim = Math.max(width, height);
 
     p5.background(0, 0, 0, 255);
 
@@ -24,7 +24,7 @@ export const Area_Turtle_Visualizer = new Visualizer(
     for (let i = 0; i < values.length; i++) {
       const amplitude = values[i] as number;
       const x = p5.map(i, 0, values.length - 1, 0, width);
-      const y = height / 2 + amplitude * height;
+      const y = height /2 + amplitude * height;
       // Place vertex
       p5.vertex(x, y);
     }
