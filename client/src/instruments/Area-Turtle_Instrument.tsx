@@ -114,82 +114,24 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
  * A = G
  * Bb = Ab
  * B = A
- */
+ *  
+    //notes + index rework
 
- function Trumpet({ synth, setSynth }: InstrumentProps): JSX.Element {
-  const keys = List([
-    { note: 'C', idx: 5.5 },
-    { note: 'Db', idx: 6 },
     { note: 'D', idx: 0 },
     { note: 'Eb', idx: 0.5 },
     { note: 'E', idx: 1 },
-    { note: 'F', idx: 1.5 },
-    { note: 'Gb', idx: 2 },
+    { note: 'F', idx: 2 },
+    { note: 'Gb', idx: 1.5 },
     { note: 'G', idx: 3 },
     { note: 'Ab', idx: 3.5 },
     { note: 'A', idx: 4 },
     { note: 'Bb', idx: 4.5 },
     { note: 'B', idx: 5 },
-  ]);
+    { note: 'C', idx: 6 },
+    { note: 'Db', idx: 5.5 },
+ */
 
-  const setOscillator = (newType: Tone.ToneOscillatorType) => {
-    setSynth(oldSynth => {
-      oldSynth.disconnect();
-
-      return new Tone.Synth({
-        oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-      }).toDestination();
-    });
-  };
-
-  const oscillators: List<OscillatorType> = List([
-    'sine',
-    'sawtooth',
-    'square',
-    'triangle',
-    'fmsine',
-    'fmsawtooth',
-    'fmtriangle',
-    'amsine',
-    'amsawtooth',
-    'amtriangle',
-  ]) as List<OscillatorType>;
-
-  return (
-    <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave =>
-          keys.map(key => {
-            const isMinor = key.note.indexOf('b') !== -1;
-            const note = `${key.note}${octave}`;
-            return (
-              <PianoKey
-                key={note} //react key
-                note={note}
-                synth={synth}
-                minor={isMinor}
-                octave={octave}
-                index={(octave - 2) * 7 + key.idx}
-              />
-            );
-          }),
-        )}
-      </div>
-      <div className={'pl4 pt4 flex'}>
-        {oscillators.map(o => (
-          <PianoType
-            key={o}
-            title={o}
-            onClick={() => setOscillator(o)}
-            active={synth?.oscillator.type === o}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
+ function Trumpet({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -261,5 +203,6 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
     </div>
   );
 }
+
 // change Piano to Trumpet??
-export const PianoInstrument2 = new Instrument('Area-Turtle_Instrument', Trumpet);
+export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument', Trumpet);

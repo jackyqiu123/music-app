@@ -6,7 +6,7 @@ import * as Tone from 'tone';
 import { Visualizer } from '../Visualizers';
 
 
-export const WaveformVisualizer2 = new Visualizer(
+export const Area_Turtle_Visualizer = new Visualizer(
   'Area-Turtle_Visualizer',
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;
