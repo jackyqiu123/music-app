@@ -14,10 +14,10 @@ import { Instrument, InstrumentProps } from '../Instruments';
 interface PianoKeyProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth; // Contains library code for making sound
+  synth?: Tone.Synth ; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
-  index: number; // octave + index together give a location for the piano key
+  index: number; // octaves + index together give a location for the piano key
 }
 
 export function PianoKey({
@@ -151,7 +151,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     setSynth(oldSynth => {
       oldSynth.disconnect();
 
-      return new Tone.Synth({
+      return new Tone.Synth  ({
         oscillator: { type: newType } as Tone.OmniOscillatorOptions,
       }).toDestination();
     });
@@ -185,6 +185,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}
+               
               />
             );
           }),
