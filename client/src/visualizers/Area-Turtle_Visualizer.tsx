@@ -26,9 +26,9 @@ export const Area_Turtle_Visualizer = new Visualizer(
     for(var y = 0; y <rows;y++){
       var x2 = 0
       for(var x = 0;x<cols;x++){
-        var r = p5.noise(x2,y2)*255;
-        var g = p5.noise(x2,y2)*255;
-        var b = p5.noise(x2,y2)*255;
+        var r = p5.noise(x2,y2) * 255;
+        var g = p5.noise(x2,y2) * 191;
+        var b = p5.noise(x2,y2) * 0;
         var v = p5.createVector(0);
         x2 += inc;
         p5.stroke(0);
@@ -39,41 +39,62 @@ export const Area_Turtle_Visualizer = new Visualizer(
     p5.beginShape();
     for (let i = 0; i < values.length; i++) {
       const amplitude = values[i] as number;
+      const x1 = p5.map(i, 0, values.length - 1, 0, window.innerWidth);
+      const y1 = height / 2 + amplitude * p5.cos(i)*window.innerHeight/4;
+      // Place vertex
+      p5.noFill();
+      p5.stroke(p5.random(225),p5.random(225),p5.random(225))
+      p5.strokeWeight(2)
+      p5.vertex(x1, y1-window.innerHeight/4+window.innerHeight/3);
+
+    }
+    p5.endShape();
+    p5.beginShape();
+    for (let j = 0; j < values.length; j++) {
+      const amplitude = values[j] as number;
+      const x2 = p5.map(j, 0, values.length - 1, 0, window.innerWidth);
+      const y2 = height / 2 + amplitude * window.innerHeight/4;
+      // Place vertex
+      p5.noFill();
+      //p5.stroke(p5.random(225),p5.random(225),p5.random(225))
+      p5.vertex(x2, y2+12.6);
+
+    }
+    p5.endShape();
+    p5.beginShape();
+    for (let i = 0; i < values.length; i++) {
+      const amplitude = values[i] as number;
+      const x3 = p5.map(i, 0, values.length - 1, 0, window.innerWidth);
+      const y3 = height / 2 + amplitude *p5.sin(i)* window.innerHeight/4;
+      // Place vertex
+      p5.noFill();
+      p5.stroke(p5.random(225),p5.random(225),p5.random(225))
+      //p5.vertex(x3, y3+74);
+      p5.vertex(x3, y3-window.innerHeight/3+window.innerHeight/4);
+    }
+    p5.endShape();
+    for (let i = 0; i < values.length; i++) {
+      const amplitude = values[i] as number;
   
       p5.fill(p5.random(225),p5.random(225),p5.random(225))
-      //p5.background("#ffffff11")
-      // const Radius = height * amplitude/4;
-      // const Size = height * amplitude/4;
-
-      // const bassX = p5.noise(p5.millis() / 1000) * width;
-			// const bassY = p5.noise(i / 100) * height;
-
-      // const beepX = p5.noise(p5.millis() / 500) * width;
-			// const beepY = p5.noise(i / 50) * height;
-      
-      // p5.ellipse(p5.random(width), p5.random(height), Radius, Radius);
-      // p5.rect(p5.random(width), p5.random(height), Size, Size);
-
-      //p5.ellipse(bassX, bassY, Radius, Radius);
-      //p5.rect(beepX, beepY, Size, Size);
-    p5.endShape()
     }
+    
     phase +=1
     const amplitude = values[0] as number;
     const Radius = height * amplitude;
     const Size = height * amplitude;
 
-    const bassX = p5.noise(p5.millis() / 1000) * width;
-		const bassY = p5.noise(phase / 100) * height;
+    const eliX = p5.noise(p5.millis() / 1000) * width;
+		const eliY = p5.noise(phase / 100) * height;
 
-    const beepX = p5.noise(p5.millis() / 500) * width;
-		const beepY = p5.noise(phase / 50) * height;
+    const rectX = p5.noise(p5.millis() / 500) * width;
+		const rectY = p5.noise(phase / 50) * height;
       
     p5.ellipse(p5.random(width), p5.random(height), Radius, Radius);
     p5.rect(p5.random(width), p5.random(height), Size, Size);
 
-    p5.ellipse(bassX, bassY, Radius, Radius);
-    p5.rect(beepX, beepY, Size, Size);
+    p5.ellipse(eliX, eliY, Radius, Radius);
+    p5.rect(rectX, rectY, Size, Size);
     
   },
 );
