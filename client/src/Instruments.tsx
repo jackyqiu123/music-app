@@ -31,8 +31,8 @@ export interface InstrumentProps2 {
   state: AppState;
   dispatch: React.Dispatch<DispatchAction>;
   name: string;
-  membranesynth: Tone.MembraneSynth;
-  setSynth: (f: (oldSynth: Tone.MembraneSynth) => Tone.MembraneSynth) => void;
+  synth: Tone.Synth;
+  setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
 }
 
 export class Instrument2 {
@@ -136,8 +136,8 @@ export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
   dispatch,
 }: InstrumentContainerProps2) => {
   const InstrumentComponent2 = instrument.component;
-  const [membranesynth, setSynth] = useState(
-    new Tone.MembraneSynth({
+  const [synth, setSynth] = useState(
+    new Tone.Synth({
       oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
     }).toDestination(),
   );
@@ -145,7 +145,7 @@ export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
   const notes = state.get('notes');
 
   useEffect(() => {
-    if (notes && membranesynth) {
+    if (notes && synth) {
       let eachNote = notes.split(' ');
       let noteObjs = eachNote.map((note: string, idx: number) => ({
         idx,
@@ -156,7 +156,7 @@ export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
 
       new Tone.Part((time, value) => {
         // the value is an object which contains both the note and the velocity
-        membranesynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+        synth.triggerAttackRelease(value.note, '4n', time, value.velocity);
         if (value.idx === eachNote.length - 1) {
           dispatch(new DispatchAction('STOP_SONG'));
         }
@@ -170,7 +170,7 @@ export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
     }
 
     return () => {};
-  }, [notes, membranesynth, dispatch]);
+  }, [notes, synth, dispatch]);
 
   return (
     <div>
@@ -183,7 +183,7 @@ export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
           name={instrument.name}
           state={state}
           dispatch={dispatch}
-          membranesynth={membranesynth}
+          synth={synth}
           setSynth={setSynth}
         />
       </div>

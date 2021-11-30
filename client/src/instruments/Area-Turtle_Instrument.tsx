@@ -3,9 +3,22 @@ import * as Tone from 'tone';
 import classNames from 'classnames';
 import { List, Range } from 'immutable';
 import React from 'react';
+//import MIDISounds from 'midi-sounds-react';
+
+/**
+ * External Library:
+ *  https://www.npmjs.com/package/midi-sounds-react
+ *  https://youtu.be/z65DSP5jw8k
+*/
+//import trumpet2  from './img/trumpet2.jpg';
+
+
 
 // project imports
-import { Instrument, InstrumentProps } from '../Instruments';
+import { Instrument2, InstrumentProps2 } from '../Instruments';
+
+
+
 
 /** ------------------------------------------------------------------------ **
  * Contains implementation of components for Piano.
@@ -131,7 +144,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     { note: 'Db', idx: 5.5 },
  */
 
- function Trumpet({synth, setSynth }: InstrumentProps): JSX.Element {
+ function Trumpet({synth, setSynth }: InstrumentProps2): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -173,6 +186,9 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
   return (
     <div className="pv4">
       <div className="relative dib h4 w-100 ml4">
+        <div className="trumpet_image">
+          <img src={'./img/homepage_bg.jpg'} alt=""/>
+        </div>
         {Range(2, 7).map(octaves =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
@@ -190,6 +206,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
             );
           }),
         )}
+        
       </div>
       <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
@@ -206,10 +223,5 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
 }
 
 // change Piano to Trumpet??
-export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument', Trumpet);
+export const Area_Turtle_Instrument = new Instrument2('Area-Turtle_Instrument', Trumpet);
 
-const synth2 = new Tone.MembraneSynth().toDestination();
-synth2.triggerAttackRelease("C2", "1n");
-//synth2.triggerAttackRelease("B3", "9n");
-//const synth = new Tone.MembraneSynth().toDestination();
-//synth.triggerAttackRelease("C2", "8n");
