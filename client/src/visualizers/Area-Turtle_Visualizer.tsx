@@ -41,7 +41,7 @@ export const Area_Turtle_Visualizer = new Visualizer(
       const amplitude = values[i] as number;
   
       p5.fill(p5.random(225),p5.random(225),p5.random(225))
-
+      //p5.background("#ffffff11")
       // const Radius = height * amplitude/4;
       // const Size = height * amplitude/4;
 

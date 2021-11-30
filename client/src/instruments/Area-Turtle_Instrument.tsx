@@ -14,9 +14,9 @@ import { Instrument, InstrumentProps } from '../Instruments';
 interface PianoKeyProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth ; // Contains library code for making sound
+  synth?: Tone.Synth; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
-  octave: number;
+  octaves: number;
   index: number; // octaves + index together give a location for the piano key
 }
 
@@ -131,7 +131,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     { note: 'Db', idx: 5.5 },
  */
 
- function Trumpet({ synth, setSynth }: InstrumentProps): JSX.Element {
+ function Trumpet({synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -173,18 +173,18 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
   return (
     <div className="pv4">
       <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave =>
+        {Range(2, 7).map(octaves =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
-            const note = `${key.note}${octave}`;
+            const note = `${key.note}${octaves}`;
             return (
               <PianoKey
                 key={note} //react key
                 note={note}
                 synth={synth}
                 minor={isMinor}
-                octave={octave}
-                index={(octave - 2) * 7 + key.idx}
+                octaves={octaves}
+                index={(octaves - 2) * 7 + key.idx}
                
               />
             );
@@ -207,3 +207,9 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
 
 // change Piano to Trumpet??
 export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument', Trumpet);
+
+const synth2 = new Tone.MembraneSynth().toDestination();
+synth2.triggerAttackRelease("C2", "1n");
+//synth2.triggerAttackRelease("B3", "9n");
+//const synth = new Tone.MembraneSynth().toDestination();
+//synth.triggerAttackRelease("C2", "8n");
