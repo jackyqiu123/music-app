@@ -27,6 +27,10 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     () => new Tone.Analyser('waveform', 256),
     [],
   );
+  // const analyzer2: Tone.Analyser = useMemo(
+  //   () => new Tone.Analyser('fft', 256),
+  //   [],
+  // );
 
   const onResize = useCallback((p5: P5) => {
     const width = window.innerWidth;
@@ -42,6 +46,14 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
       Tone.getDestination().disconnect(analyzer);
     };
   }, [analyzer]);
+
+  // useEffect(() => {
+  //   Tone.getDestination().volume.value = -5;
+  //   Tone.getDestination().connect(analyzer2);
+  //   return () => {
+  //     Tone.getDestination().disconnect(analyzer2);
+  //   };
+  // }, [analyzer2]);
 
   const setup = (p5: P5, canvasParentRef: Element) => {
     const width = window.innerWidth;
