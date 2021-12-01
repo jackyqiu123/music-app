@@ -141,15 +141,45 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
       }).toDestination();
     });
   };
+  // regular note modifications
+  /**
+   * reverb variables
+   */
+  const decayR = 1;
+  const reverb = new Tone.Reverb(decayR).toDestination();
 
   /**
-   * attempting to change the sound of the notes to be more trumpety
+   * vibrato variables
    */
-  const reverb = new Tone.Reverb;
-  const pitchShift = new Tone.PitchShift;
-  const crossFade = new Tone.CrossFade;
-  const vibrato = new Tone.Vibrato;
+  const frequencyV = 20
+  const vibrato = new Tone.Vibrato(frequencyV).toDestination();
+  // move to 12 position (slower?)
+  /**
+   * envelope variables
+   */
+  const attackE =0
+  const decayE = 0 
+  const sustainE = 0
+  const releaseE = 0
+  const envelope = new Tone.Envelope(attackE,decayE,sustainE,releaseE).toDestination();
+  // attack: 9:00, decay: 12:30, sustain: 12, release:9
+  //synth.connect(vibrato)
 
+  const trumpetInstra = new Tone.Synth({
+    oscillator: {
+      type:"amtriangle",
+      harmonicity:0.5,
+      modulationType: "sine"
+    },
+    envelope:{
+      attackCurve:"exponential",
+      attack: 0.05,
+      decay:0.02,
+      sustain: 0.02,
+      release: 1.5,
+    },
+    portamento:0.05
+  }).toDestination();
 
   const oscillators: List<OscillatorType> = List([
     'sine',
@@ -157,9 +187,11 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     'square',
     'triangle',
     'fmsine',
+    //trumpet
     'fmsawtooth',
     'fmtriangle',
     'amsine',
+    // trumpet
     'amsawtooth',
     'amtriangle',
   ]) as List<OscillatorType>;
@@ -184,7 +216,9 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
               <PianoKey
                 key={note} //react key
                 note={note}
-                synth={synth}
+                synth={synth.connect(vibrato).connect(reverb).connect(envelope)}
+                //synth={synth}
+                //synth={trumpetInstra}
                 minor={isMinor}
                 octaves={octaves}
                 index={(octaves - 2) * 7 + key.idx}
