@@ -10,7 +10,7 @@ import React from 'react';
  *  https://www.npmjs.com/package/midi-sounds-react
  *  https://youtu.be/z65DSP5jw8k
 */
-//import trumpet2  from './img/trumpet2.jpg';
+import trumpet2 from '../img/trumpet5.jpg';
 
 
 
@@ -185,14 +185,12 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
 
   return (
     <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
-        <div className="trumpet_image">
-          <img src={'./img/homepage_bg.jpg'} alt=""/>
-        </div>
+      <img src={ trumpet2 } alt=""></img>
+      <div className="relative dib h4 w-100 ml4"> 
         {Range(2, 7).map(octaves =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
-            const note = `${key.note}${octaves}`;
+            const note = `${key.note}${octaves-2}`;
             return (
               <PianoKey
                 key={note} //react key
@@ -200,7 +198,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
                 synth={synth}
                 minor={isMinor}
                 octaves={octaves}
-                index={(octaves - 2) * 7 + key.idx}
+                index={(octaves -2) * 7 + key.idx}
                
               />
             );
