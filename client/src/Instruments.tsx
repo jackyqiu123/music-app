@@ -27,23 +27,6 @@ export class Instrument {
   }
 }
 
-export interface InstrumentProps2 {
-  state: AppState;
-  dispatch: React.Dispatch<DispatchAction>;
-  name: string;
-  synth: Tone.Synth;
-  setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
-}
-
-export class Instrument2 {
-  public readonly name: string;
-  public readonly component: React.FC<InstrumentProps2>;
-
-  constructor(name: string, component: React.FC<InstrumentProps2>) {
-    this.name = name;
-    this.component = component;
-  }
-}
 
 function TopNav({ name }: { name: string }) {
   return (
@@ -61,12 +44,6 @@ interface InstrumentContainerProps {
   state: AppState;
   dispatch: React.Dispatch<DispatchAction>;
   instrument: Instrument;
-}
-
-interface InstrumentContainerProps2 {
-  state: AppState;
-  dispatch: React.Dispatch<DispatchAction>;
-  instrument: Instrument2;
 }
 
 export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
@@ -130,63 +107,3 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   );
 };
 
-export const InstrumentContainer2: React.FC<InstrumentContainerProps2> = ({
-  instrument,
-  state,
-  dispatch,
-}: InstrumentContainerProps2) => {
-  const InstrumentComponent2 = instrument.component;
-  const [synth, setSynth] = useState(
-    new Tone.Synth({
-      oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
-    }).toDestination(),
-  );
-
-  const notes = state.get('notes');
-
-  useEffect(() => {
-    if (notes && synth) {
-      let eachNote = notes.split(' ');
-      let noteObjs = eachNote.map((note: string, idx: number) => ({
-        idx,
-        time: `+${idx / 4}`,
-        note,
-        velocity: 1,
-      }));
-
-      new Tone.Part((time, value) => {
-        // the value is an object which contains both the note and the velocity
-        synth.triggerAttackRelease(value.note, '4n', time, value.velocity);
-        if (value.idx === eachNote.length - 1) {
-          dispatch(new DispatchAction('STOP_SONG'));
-        }
-      }, noteObjs).start(0);
-
-      Tone.Transport.start();
-
-      return () => {
-        Tone.Transport.cancel();
-      };
-    }
-
-    return () => {};
-  }, [notes, synth, dispatch]);
-
-  return (
-    <div>
-      <TopNav name={instrument.name} />
-      <div
-        className={'bg-white absolute right-0 left-0'}
-        style={{ top: '4rem' }}
-      >
-        <InstrumentComponent2
-          name={instrument.name}
-          state={state}
-          dispatch={dispatch}
-          synth={synth}
-          setSynth={setSynth}
-        />
-      </div>
-    </div>
-  );
-};

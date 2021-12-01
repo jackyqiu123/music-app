@@ -15,7 +15,7 @@ import trumpet2 from '../img/trumpet5.jpg';
 
 
 // project imports
-import { Instrument2, InstrumentProps2 } from '../Instruments';
+import { Instrument, InstrumentProps } from '../Instruments';
 
 
 
@@ -24,13 +24,14 @@ import { Instrument2, InstrumentProps2 } from '../Instruments';
  * Contains implementation of components for Piano.
  ** ------------------------------------------------------------------------ */
 
-interface PianoKeyProps {
+interface TrumpetKeyProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
   synth?: Tone.Synth; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octaves: number;
   index: number; // octaves + index together give a location for the piano key
+
 }
 
 export function PianoKey({
@@ -38,7 +39,7 @@ export function PianoKey({
   synth,
   minor,
   index,
-}: PianoKeyProps): JSX.Element {
+}: TrumpetKeyProps): JSX.Element {
   /**
    * This React component corresponds to either a major or minor key in the piano.
    * See `PianoKeyWithoutJSX` for the React component without JSX.
@@ -68,38 +69,9 @@ export function PianoKey({
 }
 
 // eslint-disable-next-line
-function PianoKeyWithoutJSX({
-  note,
-  synth,
-  minor,
-  index,
-}: PianoKeyProps): JSX.Element {
-  /**
-   * This React component for pedagogical purposes.
-   * See `PianoKey` for the React component with JSX (JavaScript XML).
-   */
-  return React.createElement(
-    'div',
-    {
-      onMouseDown: () => synth?.triggerAttack(`${note}`),
-      onMouseUp: () => synth?.triggerRelease('+0.25'),
-      className: classNames('ba pointer absolute dim', {
-        'bg-black black h3': minor,
-        'black bg-white h4': !minor,
-      }),
-      style: {
-        top: 0,
-        left: `${index * 2}rem`,
-        zIndex: minor ? 1 : 0,
-        width: minor ? '1.5rem' : '2rem',
-        marginLeft: minor ? '0.25rem' : 0,
-      },
-    },
-    [],
-  );
-}
 
-function PianoType({ title, onClick, active }: any): JSX.Element {
+
+function TrumpetType({ title, onClick, active }: any): JSX.Element {
   return (
     <div
       onClick={onClick}
@@ -143,8 +115,8 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     { note: 'C', idx: 6 },
     { note: 'Db', idx: 5.5 },
  */
-
- function Trumpet({synth, setSynth }: InstrumentProps2): JSX.Element {
+    
+ function Trumpet({synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -183,6 +155,14 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
     'amtriangle',
   ]) as List<OscillatorType>;
 
+  /**
+   * note.pitch -> need to be higher
+   * note.tone -> turn tone down shape
+   * note.volume ->
+   * note.vabrato -> narrow, time delay
+   * note.fade time -> slighly fast
+   * note.reverb
+   */
   return (
     <div className="pv4">
       <img src={ trumpet2 } alt=""></img>
@@ -190,7 +170,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
         {Range(2, 7).map(octaves =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
-            const note = `${key.note}${octaves-2}`;
+            const note = `${key.note}${octaves}`;
             return (
               <PianoKey
                 key={note} //react key
@@ -199,6 +179,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
                 minor={isMinor}
                 octaves={octaves}
                 index={(octaves -2) * 7 + key.idx}
+
                
               />
             );
@@ -208,7 +189,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
       </div>
       <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
-          <PianoType
+          <TrumpetType
             key={o}
             title={o}
             onClick={() => setOscillator(o)}
@@ -220,6 +201,8 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
+
+
 // change Piano to Trumpet??
-export const Area_Turtle_Instrument = new Instrument2('Area-Turtle_Instrument', Trumpet);
+export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument', Trumpet);
 
