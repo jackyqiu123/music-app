@@ -142,6 +142,15 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     });
   };
 
+  /**
+   * attempting to change the sound of the notes to be more trumpety
+   */
+  const reverb = new Tone.Reverb;
+  const pitchShift = new Tone.PitchShift;
+  const crossFade = new Tone.CrossFade;
+  const vibrato = new Tone.Vibrato;
+
+
   const oscillators: List<OscillatorType> = List([
     'sine',
     'sawtooth',
@@ -178,9 +187,8 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
                 synth={synth}
                 minor={isMinor}
                 octaves={octaves}
-                index={(octaves -2) * 7 + key.idx}
+                index={(octaves - 2) * 7 + key.idx}
 
-               
               />
             );
           }),
