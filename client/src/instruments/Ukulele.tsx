@@ -13,18 +13,21 @@ const  circle = {
     zIndex:0,
     left: "200px",
     top: "14px",
-    border:"3px solid"
+    border:"3px solid",
+    backgroundColor:"rgb(128,128,128)"
     
 }
 const curve = {
-    width: "800px",
-    height: "800px",
+    width: "700px",
+    height: "700px",
     borderRadius:"50%",
     borderLeftColor: "transparent",
     borderTopColor: "transparent",
     borderRightColor:"transparent",
-    top: "-500px",
-    left: "-200px",
+    zIndex: -0,
+    top: "-350px",
+    left: "-250px",
+    backgroundColor:"rgb(210,180,140)"
     
 }
 const second_curve ={
@@ -34,8 +37,9 @@ const second_curve ={
     borderLeftColor: "transparent",
     borderTopColor: "transparent",
     borderRightColor:"transparent",
-    top: "-245px",
-    left: "408px",
+    top: "-190px",
+    left: "250px",
+    backgroundColor:"rgb(210,180,140)"
 }
 interface UkuleleKeyProps{
     note:string;
@@ -67,22 +71,6 @@ export function UkuleleKey({
     );
 
 }
-function UkuleleType({title,onClick,active}:any):JSX.Element{
-    return(
-        <div
-        onClick={onClick}
-        className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
-            'b--black black': active,
-            'gray b--light-gray': !active,
-          })}
-        >
-        {title}
-        </div>
-    )
-}
-
-
-
 
 function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
     const keys = List([
@@ -91,26 +79,18 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
         {note: "E4",idx:3},
         {note: "A4",idx:4},
     ])
-    const setOscillator = (newType: Tone.ToneOscillatorType) => {
-        setSynth(oldSynth => {
-          oldSynth.disconnect();
-    
-          return new Tone.Synth({
-            oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-          }).toDestination();
-        });
-      };
-
 
     return(
         <div className="pv4">
             <div className="relative dib h5 w-100 ml4">
                 <div className= "ba absolute dim" style ={{
                     top:"8px",
-                    zIndex:0,
+                    zIndex:2,
                     height:"10rem",
                     width:"3rem",
-                    border:"3px solid"
+                    border:"3px solid",
+                    backgroundColor:"rgb(48,0,0)",
+                    
                 }} >
             </div>
             <div className="ba absolute bb-ns br-ns"style={curve}></div>
