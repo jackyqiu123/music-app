@@ -1,13 +1,25 @@
 // 3rd party library imports
-// import * as Tone from "tone";
-// import classNames from "classnames";
+import * as Tone from "tone";
+import React, { useState } from "react";
 import { List } from "immutable";
-// import { Sampler } from "tone";
 import xylophone from "../img/xylophone.png";
 // project imports
+
 import { Instrument, InstrumentProps } from "../Instruments";
 
 const Xylophone = ({ synth, setSynth }: InstrumentProps): JSX.Element => {
+  const [sampler, setSampler] = useState(
+    new Tone.Sampler({
+      C4: `${process.env.PUBLIC_URL}/Xylophone/C4.mp3`,
+      C5: `${process.env.PUBLIC_URL}/Xylophone/C5.mp3`,
+      C6: `${process.env.PUBLIC_URL}/Xylophone/C6.mp3`,
+      C7: `${process.env.PUBLIC_URL}/Xylophone/C7.mp3`,
+      G3: `${process.env.PUBLIC_URL}/Xylophone/G3.mp3`,
+      G4: `${process.env.PUBLIC_URL}/Xylophone/G4.mp3`,
+      G5: `${process.env.PUBLIC_URL}/Xylophone/G5.mp3`,
+      G6: `${process.env.PUBLIC_URL}/Xylophone/G6.mp3`,
+    }).toDestination()
+  );
   const keys = List([
     {
       id: 1,
@@ -177,89 +189,75 @@ const Xylophone = ({ synth, setSynth }: InstrumentProps): JSX.Element => {
     {
       id: 34,
       note: "D6",
-      coords: "550, 178, 572, 260.5"
+      coords: "550, 178, 572, 260.5",
     },
     {
       id: 35,
       note: "D#6",
-      coords: "564.5, 89.5, 586.6, 178"
+      coords: "564.5, 89.5, 586.6, 178",
     },
     {
       id: 36,
       note: "E6",
-      coords: "579, 178, 601, 258"
-    }, 
+      coords: "579, 178, 601, 258",
+    },
     {
       id: 37,
       note: "F6",
-      coords: "608, 179, 629.5, 253.5"
+      coords: "608, 179, 629.5, 253.5",
     },
     {
       id: 38,
       note: "F#6",
-      coords: "620, 99, 644, 179"
+      coords: "620, 99, 644, 179",
     },
     {
       id: 39,
       note: "G6",
-      coords: "637, 179, 658, 251.5"
+      coords: "637, 179, 658, 251.5",
     },
     {
       id: 40,
       note: "G#6",
-      coords: "651, 104, 672, 179"
+      coords: "651, 104, 672, 179",
     },
     {
       id: 41,
       note: "A7",
-      coords: "665, 179, 687, 248"
+      coords: "665, 179, 687, 248",
     },
     {
       id: 42,
       note: "A#7",
-      coords: "680, 108.5, 702, 179"
+      coords: "680, 108.5, 702, 179",
     },
     {
       id: 43,
       note: "B7",
-      coords: "694, 179, 716, 245"
+      coords: "694, 179, 716, 245",
     },
     {
       id: 44,
       note: "C7",
-      coords: "723, 174, 745, 240"
-    }
+      coords: "723, 174, 745, 240",
+    },
 
     /* TODO */
   ]);
-  // const sampler = new Sampler({
-  //   urls: {
-  //     C4: "C4.mp3",
-  //     C5: "C5.mp3",
-  //     C6: "C6.mp3",
-  //     C7: "C7.mp3",
-  //     G3: "G3.mp3",
-  //     G4: "G4.mp3",
-  //     G5: "G5.mp3",
-  //     G6: "G6.mp3",
-  //   },
-  //   baseUrl: "../Samples/Xylophone/",
-  // }).toDestination();
-
-    // const onClickHandler = (event: any) => {
-    //   sampler.triggerAttackRelease(
-    //     event.target.getAttribute("data-note"),
-    //     "8n"
-    //   );
-    // };
-  const onMouseUpHandler = (event: any) => {
-    console.log(event.target.getAttribute("data-note"));
-    synth?.triggerRelease("+0.25");
+  const onClickHandler = (event: any) => {
+    sampler.triggerAttackRelease(
+      event.target.getAttribute("data-note"),
+      "8n"
+    );
   };
-  const onMouseDownHandler = (event: any) => {
-    console.log(event.target.getAttribute("data-note"));
-    synth?.triggerAttack(event.target.getAttribute("data-note"));
-  };
+  // const onMouseUpHandler = (event: any) => {
+  //   console.log(event.target.getAttribute("data-note"));
+  //   synth?.triggerRelease("+0.25");
+  // };
+  // const onMouseDownHandler = (event: any) => {
+  //   console.log(event.target.getAttribute("data-note"));
+  //   synth?.triggerAttack(event.target.getAttribute("data-note"));
+  // };
 
   return (
     <div>
@@ -278,8 +276,9 @@ const Xylophone = ({ synth, setSynth }: InstrumentProps): JSX.Element => {
               data-note={key.note}
               shape="rect"
               coords={key.coords}
-              onMouseUp={onMouseUpHandler}
-              onMouseDown={onMouseDownHandler}
+              onClick={onClickHandler}
+              // onMouseUp={onMouseUpHandler}
+              // onMouseDown={onMouseDownHandler}
               alt="map"
             />
           );
