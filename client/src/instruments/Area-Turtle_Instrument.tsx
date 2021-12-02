@@ -3,15 +3,12 @@ import * as Tone from 'tone';
 import classNames from 'classnames';
 import { List, Range } from 'immutable';
 import React from 'react';
-//import MIDISounds from 'midi-sounds-react';
 
 /**
  * External Library:
- *  https://www.npmjs.com/package/midi-sounds-react
  *  https://youtu.be/z65DSP5jw8k
 */
 import trumpet2 from '../img/trumpet5.jpg';
-
 
 
 // project imports
@@ -131,37 +128,35 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     { note: 'Bb', idx: 5.5 },
     { note: 'B', idx: 6 },
   ]);
-
-  // const setOscillator = (newType: Tone.ToneOscillatorType) => {
-  //   setSynth(oldSynth => {
-  //     oldSynth.disconnect();
-
-  //     return new Tone.Synth  ({
-  //       oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-  //     }).toDestination();
-  //   });
-  // };
   
-  // regular note modifications
+  //note modifications
   /**
    * reverb variables
    */
-  const decayR = 2;
-  const reverb = new Tone.Reverb(decayR).toDestination();
+  const reverb = new Tone.Reverb({
+    decay : 0.5 ,
+    preDelay : 0.01
+    }).toDestination();
 
-  const delay = 1;
-  const fade = new Tone.CrossFade(delay).toDestination();
   /**
    * vibrato variables
    */
-  const frequencyV = 0.01;
-  const depthV = 0;
-  const vibrato = new Tone.Vibrato(frequencyV,depthV).toDestination();
-  // move to 12 position (slower?)
-
-  const pitch = 2;
-  const pitchShift = new Tone.PitchShift(pitch).toDestination();
-  //const  filter = new Tone.Filter(200, "lowpass");
+  const vibrato = new Tone.Vibrato({
+    maxDelay : 0.005 ,
+    frequency : 1 ,
+    depth : 0.1 ,
+    type : 'triangle'
+    }).toDestination();
+  
+  /**
+   * pitch shift variables
+   */
+  const pitchShift = new Tone.PitchShift({
+    pitch : 0 ,
+    windowSize : 0.1 ,
+    delayTime : 0 ,
+    feedback : 0
+    }).toDestination();
 
   const trumpetInstra = new Tone.Synth({
     oscillator: {
@@ -172,15 +167,13 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     envelope:{
       attackCurve:"exponential",
       attack: 5,
-      decay: 0.04,
-      sustain: 0.04,
+      decay: 1,
+      sustain: 1,
       release: 5,
     },
-    portamento: 0.05,
+
     
-  }).connect(pitchShift).connect(reverb)
-  //.toDestination();
-  //.connect(reverb).connect(vibrato).connect(pitchShift);
+  }).connect(pitchShift).connect(reverb).connect(vibrato)
 
   const oscillators: List<OscillatorType> = List([
     'sine',
@@ -197,15 +190,6 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     'amtriangle',
   ]) as List<OscillatorType>;
 
-  
-  /**
-   * note.pitch -> need to be higher
-   * note.tone -> turn tone down shape
-   * note.volume ->
-   * note.vabrato -> narrow, time delay
-   * note.fade time -> slighly fast
-   * note.reverb
-   */
   return (
     <div className="pv4">
       <img src={ trumpet2 } alt=""></img>
@@ -218,9 +202,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
               <PianoKey
                 key={note} //react key
                 note={note}
-                //synth={synth.connect(vibrato).connect(reverb).connect(envelope)}
-                //synth={synth}
-                synth={trumpetInstra}
+                synth={trumpetInstra} // new trumpet notes
                 minor={isMinor}
                 octaves={octaves}
                 index={(octaves - 2) * 7 + key.idx}
@@ -231,24 +213,12 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
         )}
         
       </div>
-
-      {/* <div className={'pl4 pt4 flex'}>
-        {oscillators.map(o => (
-          <TrumpetType
-            key={o}
-            title={o}
-            onClick={() => setOscillator(o)}
-            active={synth?.oscillator.type === o}
-          />
-        ))}
-      </div> */}
     </div>
-    
   );
 }
 
 
 
 // change Piano to Trumpet??
-export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument', Trumpet);
+export const Area_Turtle_Instrument = new Instrument('Area-Turtle_Instrument: Trumpet', Trumpet);
 
