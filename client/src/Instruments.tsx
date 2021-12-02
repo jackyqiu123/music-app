@@ -32,8 +32,12 @@ function TopNav({ name }: { name: string }) {
   return (
     <div
       className={
-        'w-100 h3 bb b--light-gray flex justify-between items-center ph4'
+        'w-100 h3 bb b--light-gray flex justify-between items-center ph4 absolute'
       }
+      style ={{
+        zIndex:1,
+        backgroundColor:"rgb(245,245,245)"
+      }}
     >
       <div>{name}</div>
     </div>
