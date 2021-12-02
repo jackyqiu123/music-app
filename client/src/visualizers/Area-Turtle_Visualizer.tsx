@@ -7,11 +7,7 @@ import { Visualizer } from '../Visualizers';
 
 var phase = 0
 var t = 0;
-var grid;
-var next;
-/**
- * 
- */
+
 export const Area_Turtle_Visualizer = new Visualizer(
   'Area-Turtle_Visualizer',
   (p5: P5, analyzer: Tone.Analyser) => {
@@ -21,46 +17,46 @@ export const Area_Turtle_Visualizer = new Visualizer(
     const values = analyzer.getValue();
 
     p5.background(255);
-    
+    /**
+     * background weird thing
+     */
     var inc = 0.01;
     let scl = 20;
     let cols = width/scl;
     let rows = height/scl;
-    backdrop();
-    rectWaveMotion();
 
-
-    function backdrop(){
-      var y2 = 0;
-      for(var y = 0; y <rows;y++){
-        var x2 = 0
-        for(var x = 0;x<cols;x++){
-          var r = p5.noise(x2,y2) * 255;
-          var g = p5.noise(x2,y2) * 191;
-          var b = p5.noise(x2,y2) * 0;
-          var v = p5.createVector(0);
-          x2 += inc;
-          p5.stroke(0);
-          p5.fill(r,g,b);
-          p5.rect(x*scl,y*scl,scl,scl);
-        }
+    var y2 = 0;
+    for(var y = 0; y <rows;y++){
+      var x2 = 0
+      for(var x = 0;x<cols;x++){
+        var r = p5.noise(x2,y2) * 255;
+        var g = p5.noise(x2,y2) * 191;
+        var b = p5.noise(x2,y2) * 0;
+        var v = p5.createVector(0);
+        x2 += inc;
+        p5.stroke(0);
+        p5.fill(r,g,b);
+        p5.rect(x*scl,y*scl,scl,scl);
       }
     }
-    
-    function rectWaveMotion(){
-      p5.beginShape();
-      for (let j = 0; j < values.length; j++) {
-        const amplitude = values[j] as number;
-        const x2 = p5.map(j, 0, values.length - 1, 0, window.innerWidth);
-        const y2 = height / 2 + amplitude * window.innerHeight/4;
+    /**
+     * center rectangle wave
+     */
+    p5.beginShape();
+    for (let j = 0; j < values.length; j++) {
+      const amplitude = values[j] as number;
+      const x2 = p5.map(j, 0, values.length - 1, 0, window.innerWidth);
+      const y2 = height / 2 + amplitude * window.innerHeight/4;
       // Place vertex
-        p5.fill(225);
-        p5.stroke(0)
-        p5.rect(x2, y2,10,20);
+      p5.fill(225);
+      p5.stroke(0)
+      p5.rect(x2, y2,10,20);
 
     }
     p5.endShape();
-    }
+    /**
+     * top and bottom wave motions
+     */
     p5.beginShape();
     for (let i = 0; i < values.length; i++) {
       const amplitude = values[i] as number;
