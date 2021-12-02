@@ -15,7 +15,6 @@ export const Area_Turtle_Visualizer = new Visualizer(
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
     const values = analyzer.getValue();
-
     p5.background(255);
     /**
      * background weird thing
