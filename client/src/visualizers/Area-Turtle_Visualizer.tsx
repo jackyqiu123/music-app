@@ -55,9 +55,9 @@ export const Area_Turtle_Visualizer = new Visualizer(
       const x2 = p5.map(j, 0, values.length - 1, 0, window.innerWidth);
       const y2 = height / 2 + amplitude * window.innerHeight/4;
       // Place vertex
-      p5.noFill();
+      p5.fill(225);
       //p5.stroke(p5.random(225),p5.random(225),p5.random(225))
-      p5.vertex(x2, y2+12.6);
+      p5.rect(x2, y2,10,20);
 
     }
     p5.endShape();

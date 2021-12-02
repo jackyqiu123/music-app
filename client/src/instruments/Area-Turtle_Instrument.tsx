@@ -132,54 +132,55 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     { note: 'B', idx: 6 },
   ]);
 
-  const setOscillator = (newType: Tone.ToneOscillatorType) => {
-    setSynth(oldSynth => {
-      oldSynth.disconnect();
+  // const setOscillator = (newType: Tone.ToneOscillatorType) => {
+  //   setSynth(oldSynth => {
+  //     oldSynth.disconnect();
 
-      return new Tone.Synth  ({
-        oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-      }).toDestination();
-    });
-  };
+  //     return new Tone.Synth  ({
+  //       oscillator: { type: newType } as Tone.OmniOscillatorOptions,
+  //     }).toDestination();
+  //   });
+  // };
+  
   // regular note modifications
   /**
    * reverb variables
    */
-  const decayR = 1;
+  const decayR = 2;
   const reverb = new Tone.Reverb(decayR).toDestination();
 
+  const delay = 1;
+  const fade = new Tone.CrossFade(delay).toDestination();
   /**
    * vibrato variables
    */
-  const frequencyV = 20
-  const vibrato = new Tone.Vibrato(frequencyV).toDestination();
+  const frequencyV = 0.01;
+  const depthV = 0;
+  const vibrato = new Tone.Vibrato(frequencyV,depthV).toDestination();
   // move to 12 position (slower?)
-  /**
-   * envelope variables
-   */
-  const attackE =0
-  const decayE = 0 
-  const sustainE = 0
-  const releaseE = 0
-  const envelope = new Tone.Envelope(attackE,decayE,sustainE,releaseE).toDestination();
-  // attack: 9:00, decay: 12:30, sustain: 12, release:9
-  //synth.connect(vibrato)
+
+  const pitch = 2;
+  const pitchShift = new Tone.PitchShift(pitch).toDestination();
+  //const  filter = new Tone.Filter(200, "lowpass");
 
   const trumpetInstra = new Tone.Synth({
     oscillator: {
-      type:"amtriangle",
-      harmonicity:0.5,
-      modulationType: "sine"
+      type: 'fmsawtooth',
+      harmonicity: 0,
+      modulationType: "sawtooth",
     },
     envelope:{
       attackCurve:"exponential",
-      attack: 0.05,
-      decay:0.02,
-      sustain: 0.02,
-      release: 1.5,
+      attack: 5,
+      decay: 0.04,
+      sustain: 0.04,
+      release: 5,
     },
-    portamento:0.05
-  }).toDestination();
+    portamento: 0.05,
+    
+  }).connect(pitchShift).connect(reverb)
+  //.toDestination();
+  //.connect(reverb).connect(vibrato).connect(pitchShift);
 
   const oscillators: List<OscillatorType> = List([
     'sine',
@@ -196,6 +197,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     'amtriangle',
   ]) as List<OscillatorType>;
 
+  
   /**
    * note.pitch -> need to be higher
    * note.tone -> turn tone down shape
@@ -216,9 +218,9 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
               <PianoKey
                 key={note} //react key
                 note={note}
-                synth={synth.connect(vibrato).connect(reverb).connect(envelope)}
+                //synth={synth.connect(vibrato).connect(reverb).connect(envelope)}
                 //synth={synth}
-                //synth={trumpetInstra}
+                synth={trumpetInstra}
                 minor={isMinor}
                 octaves={octaves}
                 index={(octaves - 2) * 7 + key.idx}
@@ -229,7 +231,8 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
         )}
         
       </div>
-      <div className={'pl4 pt4 flex'}>
+
+      {/* <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
           <TrumpetType
             key={o}
@@ -238,8 +241,9 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
             active={synth?.oscillator.type === o}
           />
         ))}
-      </div>
+      </div> */}
     </div>
+    
   );
 }
 
