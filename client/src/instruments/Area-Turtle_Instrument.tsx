@@ -50,8 +50,8 @@ export function PianoKey({
       onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
       onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
-        'bg-black black h3': minor, // minor keys are black
-        'black bg-white h4': !minor, // major keys are white
+        'bg-black gold h3': minor, // minor keys are black
+        'black bg-gold h4': !minor, // major keys are gold
       })}
       style={{
         // CSS
@@ -113,7 +113,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     { note: 'Db', idx: 5.5 },
  */
     
- function Trumpet({synth, setSynth }: InstrumentProps): JSX.Element {
+ function Trumpet(): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -128,15 +128,14 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     { note: 'Bb', idx: 5.5 },
     { note: 'B', idx: 6 },
   ]);
-  
   //note modifications
   /**
    * reverb variables
    */
   const reverb = new Tone.Reverb({
-    decay : 0.5 ,
-    preDelay : 0.01
-    }).toDestination();
+    decay : 2.87 ,
+    preDelay : 0.1
+    });
 
   /**
    * vibrato variables
@@ -144,20 +143,50 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
   const vibrato = new Tone.Vibrato({
     maxDelay : 0.005 ,
     frequency : 1 ,
-    depth : 0.1 ,
+    depth : Math.random() ,
     type : 'triangle'
-    }).toDestination();
+    });
   
   /**
    * pitch shift variables
    */
   const pitchShift = new Tone.PitchShift({
-    pitch : 0 ,
+    pitch : 0,
     windowSize : 0.1 ,
     delayTime : 0 ,
     feedback : 0
-    }).toDestination();
+    });
+  
+  const envelope2 = new Tone.Envelope({
+    attackCurve:"exponential",
+    attack: 0.161,
+    decay: 0.6,
+    sustain: 0,
+    release: 0.6,
+  });
+  //envelope2.triggerAttackRelease(0.1)
 
+  const lfo = new Tone.LFO({
+    min: 0,
+    max: 0,
+    frequency: 0.73,
+    amplitude: 1,
+  });
+  //const osc = new Tone.Oscillator().connect(envelope2).start();
+  const filter = new Tone.Filter({
+      type: 'lowpass',
+      frequency: 'B4' ,
+      rolloff: -12 ,
+      Q: 1 ,
+      gain: 0
+  });
+  const filter2 = new Tone.Filter({
+    type: 'lowpass',
+      frequency: 1200 ,
+      rolloff: -12 ,
+      Q: 1 ,
+      gain: 0
+  });
   const trumpetInstra = new Tone.Synth({
     oscillator: {
       type: 'fmsawtooth',
@@ -165,34 +194,20 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
       modulationType: "sawtooth",
     },
     envelope:{
-      attackCurve:"exponential",
-      attack: 5,
-      decay: 1,
-      sustain: 1,
-      release: 5,
-    },
-
-    
-  }).connect(pitchShift).connect(reverb).connect(vibrato)
-
-  const oscillators: List<OscillatorType> = List([
-    'sine',
-    'sawtooth',
-    'square',
-    'triangle',
-    'fmsine',
-    //trumpet
-    'fmsawtooth',
-    'fmtriangle',
-    'amsine',
-    // trumpet
-    'amsawtooth',
-    'amtriangle',
-  ]) as List<OscillatorType>;
-
+      attack: 0.161,
+      decay: 1.22,
+      sustain: 0,
+      release: 0.6,
+    }}).toDestination();
+  //trumpetInstra//.connect(envelope2)
+  //lfo.connect(trumpetInstra.oscillator)
+  trumpetInstra.connect(filter)
   return (
     <div className="pv4">
-      <img src={ trumpet2 } alt=""></img>
+      <div className = "turmpet">
+      <img src={ trumpet2 }/>
+      </div>
+      
       <div className="relative dib h4 w-100 ml4"> 
         {Range(2, 7).map(octaves =>
           keys.map(key => {
@@ -213,6 +228,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
         )}
         
       </div>
+      
     </div>
   );
 }
