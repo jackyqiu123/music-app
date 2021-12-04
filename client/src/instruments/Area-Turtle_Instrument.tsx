@@ -133,75 +133,49 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
    * reverb variables
    */
   const reverb = new Tone.Reverb({
-    decay : 2.87 ,
-    preDelay : 0.1
-    });
+    decay : 3 ,
+    wet: 1
+    }).toDestination();
 
   /**
    * vibrato variables
    */
   const vibrato = new Tone.Vibrato({
     maxDelay : 0.005 ,
-    frequency : 1 ,
-    depth : Math.random() ,
-    type : 'triangle'
-    });
+    frequency : 4.5 ,
+    depth: 0.4 ,
+    type: 'triangle'
+    }).toDestination();
   
   /**
    * pitch shift variables
    */
   const pitchShift = new Tone.PitchShift({
-    pitch : 0,
-    windowSize : 0.1 ,
-    delayTime : 0 ,
-    feedback : 0
-    });
-  
-  const envelope2 = new Tone.Envelope({
-    attackCurve:"exponential",
-    attack: 0.161,
-    decay: 0.6,
-    sustain: 0,
-    release: 0.6,
-  });
-  //envelope2.triggerAttackRelease(0.1)
-
-  const lfo = new Tone.LFO({
-    min: 0,
-    max: 0,
-    frequency: 0.73,
-    amplitude: 1,
-  });
-  //const osc = new Tone.Oscillator().connect(envelope2).start();
+    pitch : -2,
+    }).toDestination();
+  /**
+   * filter variables
+   */
   const filter = new Tone.Filter({
-      type: 'lowpass',
-      frequency: 'B4' ,
-      rolloff: -12 ,
-      Q: 1 ,
-      gain: 0
-  });
-  const filter2 = new Tone.Filter({
     type: 'lowpass',
-      frequency: 1200 ,
-      rolloff: -12 ,
-      Q: 1 ,
-      gain: 0
-  });
-  const trumpetInstra = new Tone.Synth({
+    frequency: 90 ,
+
+  }).toDestination();
+
+  const trumpetInstrament = new Tone.Synth({
     oscillator: {
-      type: 'fmsawtooth',
-      harmonicity: 0,
-      modulationType: "sawtooth",
+      type: 'fmsine',
+      modulationType: "sine", //sawtooth
+      volume: -2
     },
     envelope:{
       attack: 0.161,
       decay: 1.22,
       sustain: 0,
       release: 0.6,
-    }}).toDestination();
-  //trumpetInstra//.connect(envelope2)
-  //lfo.connect(trumpetInstra.oscillator)
-  trumpetInstra.connect(filter)
+    },}).toDestination();
+    trumpetInstrament.connect(reverb).connect(filter).connect(vibrato).connect(pitchShift)
+
   return (
     <div className="pv4">
       <div className = "turmpet">
@@ -217,7 +191,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
               <PianoKey
                 key={note} //react key
                 note={note}
-                synth={trumpetInstra} // new trumpet notes
+                synth={trumpetInstrament} // new trumpet notes
                 minor={isMinor}
                 octaves={octaves}
                 index={(octaves - 2) * 7 + key.idx}
