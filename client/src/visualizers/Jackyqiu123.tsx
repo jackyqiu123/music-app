@@ -7,7 +7,7 @@ import { SideNav } from "../SideNav";
 import { Visualizer } from "../Visualizers";
 
 export const TriangleVisualizer = new Visualizer(
-    'InfinityWave',
+    'Jackyqiu123',
     (p5: P5, analyzer: Tone.Analyser) => {
         const width = window.innerWidth;
         const height = window.innerHeight / 2;
@@ -34,7 +34,7 @@ export const TriangleVisualizer = new Visualizer(
     },
 );
 export const Circle = new Visualizer(
-  "Circle",
+  "Jackyqiu123",
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
