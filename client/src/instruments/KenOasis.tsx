@@ -245,20 +245,8 @@ const Xylophone = ({ synth, setSynth }: InstrumentProps): JSX.Element => {
     /* TODO */
   ]);
   const onClickHandler = (event: any) => {
-    sampler.triggerAttackRelease(
-      event.target.getAttribute("data-note"),
-      "8n"
-    );
+    sampler.triggerAttackRelease(event.target.getAttribute("data-note"), "8n");
   };
-  // const onMouseUpHandler = (event: any) => {
-  //   console.log(event.target.getAttribute("data-note"));
-  //   synth?.triggerRelease("+0.25");
-  // };
-  // const onMouseDownHandler = (event: any) => {
-  //   console.log(event.target.getAttribute("data-note"));
-  //   synth?.triggerAttack(event.target.getAttribute("data-note"));
-  // };
-
   return (
     <div>
       <img
