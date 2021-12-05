@@ -89,3 +89,15 @@ html, body, #root {
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
 }
+
+.search-song{
+  display:flex;
+}
+.search-song input[type = text]{
+  width:80%;
+}
+.search-song input[type = button]{
+  width:25%;
+  font-size:12px;
+  font-weight: bold;
+}
