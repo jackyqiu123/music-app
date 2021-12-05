@@ -119,16 +119,17 @@ export function UkuleleKey({
     synth,
     index,
 }:UkuleleKeyProps): JSX.Element {
+
     return (
     <div
-      onMouseEnter={(event) =>{
+      onMouseDown={(event) =>{
           event.preventDefault();
           const html = event.target as Element;
           const data_note = html.getAttribute("data-note");
           synth?.triggerAttack(`${data_note}`)
         }}
-      onMouseLeave={()=>synth?.triggerRelease(`+0.25`)}
-      className = "ba absolute b--black"
+      onMouseUp={()=>synth?.triggerRelease(`+0.25`)}
+      className = "ba pointer absolute b--black"
       id={`${index}`}
       style ={{
           top:`${index * 35}px`,
@@ -144,10 +145,25 @@ export function UkuleleKey({
     );
 
 }
+function clean_up_button_activate(){
+    const buttons= document.getElementById("chord_type");
+    const child_element = buttons?.childNodes as NodeListOf<ChildNode>;
+    for(let i=0 ; i< child_element.length ; i++){
+        const child = child_element[i] as Element;
+        if(child.classList.contains("black")){
+            child.classList.remove("b--black","black");
+            child.classList.add("gray","b--light-gray");
+        }
+    }
+
+
+}
+
 function UkuleleChord({title}:any):JSX.Element{
+
     return (
         <button
-          className='dim pointer '
+          className='dim pointer gray b--light-gray '
           id ={title}
           style={{
               width:"70px",
@@ -155,8 +171,11 @@ function UkuleleChord({title}:any):JSX.Element{
           }}
           onClick={(event)=>{
             event.preventDefault();
+            clean_up_button_activate()
             const html = event.target as Element;
             const id = html.id;
+            html.classList.remove("gray","b--light-gray");
+            html.classList.add("b--black","black");
             const chrod_list = Ukulele_chord.chord_analysis(id);
             chrod_list.map(string_obj=>{
                 const uku_string = document.getElementById(`${string_obj.idx}`);
@@ -173,14 +192,6 @@ function UkuleleChord({title}:any):JSX.Element{
 
 function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
 
-    // const setChord = (chord: string) =>{
-    //     const stringList=Ukulele_chord.chord_analysis(chord);
-    //     stringList.map(string_obj => {
-    //         const uku_string = document.getElementById(`${string_obj.idx}`);
-    //         uku_string?.setAttribute("data-note", string_obj.note);
-    //     })
-
-    // }
     const chord_type :List<string> = List([
         "C",
         "Dm",
@@ -192,7 +203,6 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
     ]) as List<string>;
 
     const keys = Ukulele_chord.chord_analysis()
-
     return(
         <div className="pv4">
             <div className="relative dib h5 w-100 ml4">
@@ -210,7 +220,9 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
             {Range(0,10).map(line_num =>{
                 const left_move =550+ line_num*50;
                 return(
-                    <div className= "ba absolute" style={{
+                    <div className= "ba absolute"
+                        key = {left_move} 
+                        style={{
                         height:"120px",
                         border:"3px solid rgb(77, 77, 77)",
                         zIndex:3,
@@ -219,8 +231,8 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
                     }} ></div>
                 )
             })}
-            <div className="ba absolute bb-ns br-ns"style={curve}></div>
-            <div className="ba absolute  bb-ns br-ns" id="circle" style={second_curve}></div>
+            <div className=" absolute "style={curve}></div>
+            <div className=" absolute  " id="circle" style={second_curve}></div>
             <div className="ba absolute " id="circle" style={circle}></div>
             {keys.map(key => {
                 return(
@@ -234,9 +246,9 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
             }
             )}
             </div>
-            <div className={'p14 pt4 flex absolute'} 
+            <div className={'p14 pt4 flex absolute'}
+                id={"chord_type"} 
                 style={{
-                    zIndex:2,
                     left:"600px"
                     }}>
                 {chord_type.map(chord =>{
