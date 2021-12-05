@@ -162,7 +162,9 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
 
   }).toDestination();
 
-
+  /**
+   * main trumpet instrument
+   */
   const trumpetInstrament = new Tone.Synth({
     oscillator: {
       type: 'fmsine',
