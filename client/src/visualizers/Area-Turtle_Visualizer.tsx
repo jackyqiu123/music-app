@@ -6,7 +6,6 @@ import { couldStartTrivia } from 'typescript';
 
 //project imports
 import { Visualizer } from '../Visualizers';
-import trumpet2 from '../img/trumpet5.jpg';
 
 let angle = 0;
 
