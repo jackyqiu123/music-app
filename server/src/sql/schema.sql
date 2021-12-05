@@ -6,6 +6,7 @@ PRAGMA foreign_keys;
 -- then go implement a way to change a room_name without losing
 -- references by using a FOREIGN KEY into a rooms table with an 
 -- int primary key.
+
 CREATE TABLE songs (
 	id int NOT NULL PRIMARY KEY,
 	song_title text NOT NULL,
