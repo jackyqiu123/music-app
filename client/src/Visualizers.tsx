@@ -1,8 +1,8 @@
 // 3rd party library imports
-import * as Tone from 'tone';
-import Sketch from 'react-p5';
-import P5 from 'p5';
-import React, { useEffect, useMemo, useCallback } from 'react';
+import * as Tone from "tone";
+import Sketch from "react-p5";
+import P5 from "p5";
+import React, { useEffect, useMemo, useCallback } from "react";
 
 type VisualizerDrawer = (p5: P5, analyzer: Tone.Analyser) => void;
 
@@ -13,24 +13,32 @@ interface VisualizerContainerProps {
 export class Visualizer {
   public readonly name: string;
   public readonly draw: VisualizerDrawer;
+  public readonly mode_type: boolean;
 
-  constructor(name: string, draw: VisualizerDrawer) {
+  constructor(
+    name: string,
+    draw: VisualizerDrawer,
+    mode_type: boolean = false
+  ) {
     this.name = name;
     this.draw = draw;
+    this.mode_type = mode_type;
   }
 }
 
 export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
-  const { name, draw } = visualizer;
+  const { name, draw, mode_type } = visualizer;
+  let mode: Tone.AnalyserType = "waveform";
+  let size: number = 256;
+  if (mode_type) {
+    mode = "fft";
+    size = 64;
+  }
 
   const analyzer: Tone.Analyser = useMemo(
-    () => new Tone.Analyser('waveform', 256),
-    [],
+    () => new Tone.Analyser(mode, size),
+    []
   );
-  // const analyzer2: Tone.Analyser = useMemo(
-  //   () => new Tone.Analyser('fft', 256),
-  //   [],
-  // );
 
   const onResize = useCallback((p5: P5) => {
     const width = window.innerWidth;
@@ -47,14 +55,6 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     };
   }, [analyzer]);
 
-  // useEffect(() => {
-  //   Tone.getDestination().volume.value = -5;
-  //   Tone.getDestination().connect(analyzer2);
-  //   return () => {
-  //     Tone.getDestination().disconnect(analyzer2);
-  //   };
-  // }, [analyzer2]);
-
   const setup = (p5: P5, canvasParentRef: Element) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
@@ -62,11 +62,11 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
   };
 
   return (
-    <div className={'bg-black absolute bottom-0 right-0 left-0 h-50'}>
-      <div className={'z-1 absolute left-0 top-0 pa4 white f5'}>{name}</div>
+    <div className={"bg-black absolute bottom-0 right-0 left-0 h-50"}>
+      <div className={"z-1 absolute left-0 top-0 pa4 white f5"}>{name}</div>
       <Sketch
         setup={setup}
-        draw={p5 => draw(p5, analyzer)}
+        draw={(p5) => draw(p5, analyzer)}
         windowResized={onResize}
       />
     </div>
