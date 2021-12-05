@@ -25,6 +25,8 @@ export const Area_Turtle_Visualizer = new Visualizer(
     let cols = width/scl;
     let rows = height/scl;
 
+    let theta = 0
+
     var y2 = 0;
     for(var y = 0; y <rows;y++){
       var x2 = 0
@@ -47,10 +49,15 @@ export const Area_Turtle_Visualizer = new Visualizer(
       const amplitude = values[j] as number;
       const x2 = p5.map(j, 0, values.length - 1, 0, window.innerWidth);
       const y2 = height / 2 + amplitude * window.innerHeight/4;
+      r = height *0.45
+      //p5.translate(width/4,height/4)
+      const x3 = r * p5.cos(theta)
+      const y3 = r * p5.sin(theta)
       // Place vertex
       p5.fill(225);
       p5.stroke(0)
       p5.rect(x2, y2,10,20);
+      //p5.ellipse(x3,y3,32,32)
 
     }
     p5.endShape();
@@ -64,7 +71,7 @@ export const Area_Turtle_Visualizer = new Visualizer(
       const y1 = height / 2 + amplitude * p5.cos(i)*window.innerHeight/4;
       // Place vertex
       p5.noFill();
-      p5.stroke(p5.random(225),p5.random(225),p5.random(225))
+      p5.stroke(p5.random(255),p5.random(255),p5.random(255))
       p5.vertex(x1, y1-window.innerHeight/4+window.innerHeight/3);
       
     }
