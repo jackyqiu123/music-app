@@ -100,10 +100,10 @@ export const Area_Turtle_Visualizer = new Visualizer(
     const Radius = height * amplitude/2;
     const Size = height * amplitude/2;
 
-    const eliX = p5.noise(p5.millis() / 1000) * width;
+    const eliX = p5.noise(p5.millis() / 1000) * width*amplitude;
 		const eliY = p5.noise(phase / 100) * height;
 
-    const rectX = p5.noise(p5.millis() / 500) * width;
+    const rectX = p5.noise(p5.millis() / 500) * width*amplitude;
 		const rectY = p5.noise(phase / 50) * height;
     p5.fill(255,191,0)
     p5.ellipse(p5.random(width), p5.random(height), Radius, Radius);
