@@ -1,10 +1,9 @@
 // 3rd party library imports
-import React, { useState, useEffect } from 'react';
-import * as Tone from 'tone';
-
+import React, { useState, useEffect } from "react";
+import * as Tone from "tone";
 // project imports
-import { DispatchAction } from './Reducer';
-import { AppState } from './State';
+import { DispatchAction } from "./Reducer";
+import { AppState } from "./State";
 
 /** ------------------------------------------------------------------------ **
  * Contains implementation of an Instruments.
@@ -58,15 +57,16 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const InstrumentComponent = instrument.component;
   const [synth, setSynth] = useState(
     new Tone.Synth({
-      oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
-    }).toDestination(),
+      oscillator: { type: "sine" } as Tone.OmniOscillatorOptions,
+    }).toDestination()
   );
 
-  const notes = state.get('notes');
+
+  const notes = state.get("notes");
 
   useEffect(() => {
     if (notes && synth) {
-      let eachNote = notes.split(' ');
+      let eachNote = notes.split(" ");
       let noteObjs = eachNote.map((note: string, idx: number) => ({
         idx,
         time: `+${idx / 4}`,
@@ -76,9 +76,9 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
 
       new Tone.Part((time, value) => {
         // the value is an object which contains both the note and the velocity
-        synth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+        synth.triggerAttackRelease(value.note, "4n", time, value.velocity);
         if (value.idx === eachNote.length - 1) {
-          dispatch(new DispatchAction('STOP_SONG'));
+          dispatch(new DispatchAction("STOP_SONG"));
         }
       }, noteObjs).start(0);
 
@@ -96,8 +96,8 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
     <div>
       <TopNav name={instrument.name} />
       <div
-        className={'bg-white absolute right-0 left-0'}
-        style={{ top: '4rem' }}
+        className={"bg-white absolute right-0 left-0"}
+        style={{ top: "4rem" }}
       >
         <InstrumentComponent
           name={instrument.name}
@@ -107,6 +107,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           setSynth={setSynth}
         />
       </div>
+      
     </div>
   );
 };

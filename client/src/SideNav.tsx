@@ -111,10 +111,6 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
   }
   return (
       <Section title="Playlist">
-        <div className = "search-song">
-        <input ref = {searchRef} type = "text" />
-        <input type = "button" value = "search" onClick = {searchSubmit}/>
-        </div>
         {songs.map(song => (
           <div
             key={song.get('id')}
