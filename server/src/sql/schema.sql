@@ -28,4 +28,7 @@ VALUES (5,'I am a Little Painter', 'G4 E4 G4 E4 G4 E4 C4 D4 F4 E4 D4 G4 G4 E4 G4
 INSERT INTO songs (id, song_title, notes)
 VALUES (6,'蜜雪冰城', 'E5 G5 G5 A5 G5 E5 C5 C5 D5 E5 E5 D5 C5 D5 E5 G5 G5 A5 G5 E5 C5 C5 D5 E5 E5 D5 C5');
 
+INSERT INTO songs (id, song_title, notes)
+VALUES (7,'Star Spangled Banner', 'G5 E4 C4 E4 G4 C5 E5 D5 C5 E4 F#4 G4 G4 G4 E5 D5 C5 B4 A4 B4 C5 C5 G4 E4 C4');
+
 
