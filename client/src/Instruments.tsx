@@ -16,7 +16,6 @@ export interface InstrumentProps {
   synth: Tone.Synth;
   setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
 }
-
 export class Instrument {
   public readonly name: string;
   public readonly component: React.FC<InstrumentProps>;
@@ -26,6 +25,7 @@ export class Instrument {
     this.component = component;
   }
 }
+
 
 function TopNav({ name }: { name: string }) {
   return (
@@ -109,3 +109,4 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
     </div>
   );
 };
+
