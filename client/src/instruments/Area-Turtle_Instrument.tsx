@@ -166,7 +166,7 @@ function TrumpetType({ title, onClick, active }: any): JSX.Element {
     oscillator: {
       type: 'fmsine',
       modulationType: "sine", //sawtooth
-      volume: -2
+      volume: 0
     },
     envelope:{
       attack: 0.161,
