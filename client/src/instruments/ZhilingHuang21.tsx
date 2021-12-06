@@ -261,4 +261,4 @@ function Ukulele({synth, setSynth}:InstrumentProps): JSX.Element{
         </div>
     )
 }
-export const UkuleleInstrument = new Instrument('Ukulele', Ukulele);
+export const UkuleleInstrument = new Instrument('ZhilingHuang21-Ukulele', Ukulele);

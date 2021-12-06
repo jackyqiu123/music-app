@@ -67,4 +67,4 @@ function Triangle({ synth, setSynth }: InstrumentProps): JSX.Element {
     </div>
   );
 }
-export const TriangleInstrument = new Instrument("Triangle", Triangle);
+export const TriangleInstrument = new Instrument("Jackyqiu123-Triangle", Triangle);
