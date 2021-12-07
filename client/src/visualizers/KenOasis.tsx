@@ -6,7 +6,7 @@ import * as Tone from "tone";
 import { Visualizer } from "../Visualizers";
 
 export const DynamicVisualizer = new Visualizer(
-  "KenOasis",
+  "KenOasis-Bars",
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
@@ -33,7 +33,6 @@ export const DynamicVisualizer = new Visualizer(
     }
 
     const spectrum = transfer(fft);
-    // console.log(spectrum);
     p5.stroke(255);
     p5.beginShape();
     for (let i = 0; i <= spectrum.length; i++) {

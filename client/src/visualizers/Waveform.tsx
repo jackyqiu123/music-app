@@ -22,7 +22,7 @@ export const WaveformVisualizer = new Visualizer(
     for (let i = 0; i < values.length; i++) {
       const amplitude = values[i] as number;
       const x = p5.map(i, 0, values.length - 1, 0, width);
-      const y = height/2 + amplitude * height;
+      const y = height / 2 + amplitude * height;
       // Place vertex
       p5.vertex(x, y);
     }
