@@ -5,6 +5,8 @@ import * as Tone from "tone";
 // project imports
 import { Visualizer } from "../Visualizers";
 
+// xelophone sound sample source xylophone   - VSO2 https://freesound.org
+
 export const DynamicVisualizer = new Visualizer(
   "KenOasis-Bars",
   (p5: P5, analyzer: Tone.Analyser) => {
